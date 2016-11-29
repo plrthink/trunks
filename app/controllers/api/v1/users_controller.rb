@@ -3,7 +3,12 @@ module Api::V1
 
     # GET /v1/users
     def index
-      render json: User.all
+      @users = User.all
+
+      offset = params[:offset].to_i
+      limit = params[:limit].to_i
+
+      render json: @users.order(id: :desc).offset(offset * limit).limit(limit)
     end
 
   end
